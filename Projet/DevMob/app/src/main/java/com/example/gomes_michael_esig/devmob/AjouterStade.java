@@ -4,7 +4,9 @@ package com.example.gomes_michael_esig.devmob;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.constraint.solver.widgets.Snapshot;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,8 +23,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -132,7 +139,7 @@ public class AjouterStade extends AppCompatActivity {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
+                                           final int pos, final long id) {
                 // TODO Auto-generated method stub
                 final String test = (String) arg0.getItemAtPosition(pos);
                 Log.v("long clicked", "pos: " + test);
@@ -146,10 +153,92 @@ public class AjouterStade extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                DocumentReference noteRef = db.document("Adresse");
+                               String op = db.collection("Adresse").document(test).getPath().toString();
+                                Toast.makeText(AjouterStade.this, "Data deleted !" + op,
+                                        Toast.LENGTH_SHORT).show();
+
+
+                                db.collection("Adresse")
+                                        .document(test)
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(AjouterStade.this, "Data deleted !",
+                                                        Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        });
+
+
+//                                DocumentReference  docref = db.collection("Adresse").document(test);
+//                                Map<String,Object> updates = new HashMap<>();
+//                                updates.put(test, FieldValue.delete());
+//                                docref.update(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        Toast.makeText(AjouterStade.this, "Data deleted !",
+//                                                Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+
+
+
+
+
+
+
+
+
+
+
+//                                Toast.makeText(AjouterStade.this, "Data deleted !",
+//                                                Toast.LENGTH_SHORT).show();
+
+//                                        .child("Adresse").child("Adresse").removeValue();
+//
+//                                database.child("Adresse").child(test).getRef().removeValue();
+//                                db.collection("Adresse").document("Adresse")
+//                                        .delete().addOnSuccessListener(new OnSuccessListener < Void > () {
+//                                    @Override
+//                                    public void onSuccess(Void aVoid) {
+//                                        Toast.makeText(AjouterStade.this, "Data deleted !",
+//                                                Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+
+//
+
+
+
+
+
+
+
+
+
+//                                .document(test);
+//                                noteRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task task) {
+//                                        if(task.isSuccessful()){
+//                                            Toast.makeText(AjouterStade.this, "OK BG", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                        else{
+//                                            Toast.makeText(AjouterStade.this, "FAUX", Toast.LENGTH_SHORT).show();
+//                                        }
+//
+//                                    }
+//                                });
+
+
+
 
                             }
                         });
+
+
+
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -183,7 +272,6 @@ public class AjouterStade extends AppCompatActivity {
             ad.show();
         }
     }
-
 
 }
 
