@@ -8,10 +8,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -20,16 +23,36 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class stat extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient googleApiClient;
     private ImageButton add;
 
+    //    Read
+    ListView listviewSais;
+    List<String> saisList = new ArrayList<>();
+
+
+
+    FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
+        db = FirebaseFirestore.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -47,6 +70,25 @@ public class stat extends AppCompatActivity implements GoogleApiClient.OnConnect
                 add(stat.this);
             }
         });
+
+        //        READ
+//        listviewSais = (ListView) findViewById(R.id.lvSaison);
+//
+//        db.collection("saison").addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+////                saisList.clear();
+//                for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+//                    Toast.makeText(getApplicationContext(), snapshot.get().toString(), Toast.LENGTH_SHORT).show();
+////                    saisList.add(snapshot.getString("saison"));
+//                }
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, saisList);
+//                adapter.notifyDataSetChanged();
+//                listviewSais.setAdapter(adapter);
+//
+//            }
+//        });
+
 
     }
 
@@ -78,10 +120,9 @@ public class stat extends AppCompatActivity implements GoogleApiClient.OnConnect
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String task = String.valueOf(taskEditText.getText());
-
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef = database.getReference("Saison");
-                        myRef.setValue(task);
+                        Map<String, String> userMap = new HashMap<>();
+                        userMap.put("saison", task);
+                        db.collection("saison").add(userMap);
                         Toast.makeText(getApplicationContext(), task, Toast.LENGTH_SHORT).show();
                     }
                 })

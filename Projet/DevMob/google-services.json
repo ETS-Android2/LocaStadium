@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "3939172993",
+    "firebase_url": "https://projetdevmobile2019.firebaseio.com",
+    "project_id": "projetdevmobile2019",
+    "storage_bucket": "projetdevmobile2019.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3939172993:android:45ab2e12c7b9da9c",
+        "android_client_info": {
+          "package_name": "com.example.gomes_michael_esig.devmob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3939172993-tsblkganej512eqvmm860sbu8cl80vbq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gomes_michael_esig.devmob",
+            "certificate_hash": "d91495ae08575a897dbd3976793013aa78f0d7ab"
+          }
+        },
+        {
+          "client_id": "3939172993-1bki5on2724naagu70v0ddqijobana1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gomes_michael_esig.devmob",
+            "certificate_hash": "4ddd6bd4bfa4fde58c5e173727947f3978506832"
+          }
+        },
+        {
+          "client_id": "3939172993-ijcu283q5ufq5034os8vk9briod8vptr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoydYCe7P_18K7Fwzy32BVy-yhQCPEBCc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3939172993-ijcu283q5ufq5034os8vk9briod8vptr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
