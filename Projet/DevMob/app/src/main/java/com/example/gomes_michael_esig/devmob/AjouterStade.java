@@ -1,6 +1,7 @@
 package com.example.gomes_michael_esig.devmob;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -54,7 +55,7 @@ public class AjouterStade extends AppCompatActivity {
     private EditText texteAdresse;
     private Button add;
     private FirebaseFirestore db;
-
+    private  String obj;
     private String editAdresse;
 
     //    Read
@@ -141,34 +142,34 @@ public class AjouterStade extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            final int pos, final long id) {
                 // TODO Auto-generated method stub
-                final String test = (String) arg0.getItemAtPosition(pos);
-                Log.v("long clicked", "pos: " + test);
+                final String obj = (String) arg0.getItemAtPosition(pos);
+                Log.v("long clicked", "pos: " + obj);
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(AjouterStade.this);
-                builder.setCancelable(true);
-                builder.setTitle("Suppression");
-                builder.setMessage(Html.fromHtml("Voulez-vous supprimer" + "<br>" +  "<b>" +arg0.getItemAtPosition(pos)));
-                builder.setPositiveButton("Valider",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                               String op = db.collection("Adresse").document(test).getPath().toString();
-                                Toast.makeText(AjouterStade.this, "Data deleted !" + op,
-                                        Toast.LENGTH_SHORT).show();
-
-
-                                db.collection("Adresse")
-                                        .document(test)
-                                        .delete()
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(AjouterStade.this, "Data deleted !",
-                                                        Toast.LENGTH_SHORT).show();
-
-                                            }
-                                        });
+//                AlertDialog.Builder builder = new AlertDialog.Builder(AjouterStade.this);
+//                builder.setCancelable(true);
+//                builder.setTitle("Suppression");
+//                builder.setMessage(Html.fromHtml("Voulez-vous supprimer" + "<br>" +  "<b>" +arg0.getItemAtPosition(pos)));
+//                builder.setPositiveButton("Valider",
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                               String op = db.collection("Adresse").document(test).getPath().toString();
+//                                Toast.makeText(AjouterStade.this, "Data deleted !" + op,
+//                                        Toast.LENGTH_SHORT).show();
+//
+//
+//                                db.collection("Adresse")
+//                                        .document(test)
+//                                        .delete()
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//                                                Toast.makeText(AjouterStade.this, "Data deleted !",
+//                                                        Toast.LENGTH_SHORT).show();
+//
+//                                            }
+//                                        });
 
 
 //                                DocumentReference  docref = db.collection("Adresse").document(test);
@@ -181,15 +182,6 @@ public class AjouterStade extends AppCompatActivity {
 //                                                Toast.LENGTH_SHORT).show();
 //                                    }
 //                                });
-
-
-
-
-
-
-
-
-
 
 
 //                                Toast.makeText(AjouterStade.this, "Data deleted !",
@@ -206,17 +198,6 @@ public class AjouterStade extends AppCompatActivity {
 //                                                Toast.LENGTH_SHORT).show();
 //                                    }
 //                                });
-
-//
-
-
-
-
-
-
-
-
-
 //                                .document(test);
 //                                noteRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
 //                                    @Override
@@ -234,26 +215,28 @@ public class AjouterStade extends AppCompatActivity {
 
 
 
-                            }
-                        });
-
-
-
-                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
-                Log.v("long clicked", "pos: " + pos);
-
+//                            }
+//                        });
+//
+//
+//
+//                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                    }
+//                });
+//
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
+//
+//                Log.v("long clicked", "pos: " + pos);
+//
+//                return true;
+//            }
+               Update(AjouterStade.this, obj);
                 return true;
-            }
-        });
-    }
+//        });
+    }});}
 
 
     public void carte(View view) {
@@ -271,6 +254,34 @@ public class AjouterStade extends AppCompatActivity {
             ad.setMessage("Echec de lancement de Maps");
             ad.show();
         }
+    }
+
+
+    private void Update(Context c, final String obj) {
+        final EditText taskEditText = new EditText(c);
+        taskEditText.setText(obj);
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("Ajouter une saison")
+                .setMessage("Comment voulez-vous appeler votre saison ?")
+                .setView(taskEditText)
+                .setPositiveButton("Créer", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String docid = db.collection("Adresse").document().getId().toString();
+                        DocumentReference ref = db.document("Adresse/Adresse");
+                        String task = String.valueOf(taskEditText.getText());
+                        Map<String, Object> upStade = new HashMap<>();
+                        upStade.put("Adresse", task);
+//                        DocumentReference ref = db.document("Adresse/Adresse");
+                        ref.set(upStade);
+
+                        Toast.makeText(getApplicationContext(), docid, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
     }
 
 }
