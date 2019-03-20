@@ -55,7 +55,7 @@ public class AjouterStade extends AppCompatActivity {
     private EditText texteAdresse;
     private Button add;
     private FirebaseFirestore db;
-    private  String obj;
+    private String obj;
     private String editAdresse;
 
     //    Read
@@ -83,7 +83,6 @@ public class AjouterStade extends AppCompatActivity {
                     return;
                 }
 
-
                 String adresse = texteAdresse.getText().toString();
                 Map<String, String> userMap = new HashMap<>();
                 userMap.put("Adresse", adresse);
@@ -105,9 +104,10 @@ public class AjouterStade extends AppCompatActivity {
 
         });
 
+
+
 //        READ
         listview = (ListView) findViewById(R.id.listStade);
-
 
         db.collection("Adresse").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -123,7 +123,7 @@ public class AjouterStade extends AppCompatActivity {
             }
         });
 
-//        carte
+//        map
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -135,7 +135,7 @@ public class AjouterStade extends AppCompatActivity {
             }
         });
 
-//        Delete
+//        Update
         listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -145,106 +145,60 @@ public class AjouterStade extends AppCompatActivity {
                 final String obj = (String) arg0.getItemAtPosition(pos);
                 Log.v("long clicked", "pos: " + obj);
 
-
-//                AlertDialog.Builder builder = new AlertDialog.Builder(AjouterStade.this);
-//                builder.setCancelable(true);
-//                builder.setTitle("Suppression");
-//                builder.setMessage(Html.fromHtml("Voulez-vous supprimer" + "<br>" +  "<b>" +arg0.getItemAtPosition(pos)));
-//                builder.setPositiveButton("Valider",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                               String op = db.collection("Adresse").document(test).getPath().toString();
-//                                Toast.makeText(AjouterStade.this, "Data deleted !" + op,
-//                                        Toast.LENGTH_SHORT).show();
-//
-//
-//                                db.collection("Adresse")
-//                                        .document(test)
-//                                        .delete()
-//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                            @Override
-//                                            public void onSuccess(Void aVoid) {
-//                                                Toast.makeText(AjouterStade.this, "Data deleted !",
-//                                                        Toast.LENGTH_SHORT).show();
-//
-//                                            }
-//                                        });
-
-
-//                                DocumentReference  docref = db.collection("Adresse").document(test);
-//                                Map<String,Object> updates = new HashMap<>();
-//                                updates.put(test, FieldValue.delete());
-//                                docref.update(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<Void> task) {
-//                                        Toast.makeText(AjouterStade.this, "Data deleted !",
-//                                                Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
-
-
-//                                Toast.makeText(AjouterStade.this, "Data deleted !",
-//                                                Toast.LENGTH_SHORT).show();
-
-//                                        .child("Adresse").child("Adresse").removeValue();
-//
-//                                database.child("Adresse").child(test).getRef().removeValue();
-//                                db.collection("Adresse").document("Adresse")
-//                                        .delete().addOnSuccessListener(new OnSuccessListener < Void > () {
-//                                    @Override
-//                                    public void onSuccess(Void aVoid) {
-//                                        Toast.makeText(AjouterStade.this, "Data deleted !",
-//                                                Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
-//                                .document(test);
-//                                noteRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task task) {
-//                                        if(task.isSuccessful()){
-//                                            Toast.makeText(AjouterStade.this, "OK BG", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                        else{
-//                                            Toast.makeText(AjouterStade.this, "FAUX", Toast.LENGTH_SHORT).show();
-//                                        }
-//
-//                                    }
-//                                });
-
-
-
-
-//                            }
-//                        });
-//
-//
-//
-//                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                    }
-//                });
-//
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-//
-//                Log.v("long clicked", "pos: " + pos);
-//
-//                return true;
-//            }
-               Update(AjouterStade.this, obj);
+                Update(AjouterStade.this, obj);
                 return true;
-//        });
-    }});}
+            }
+        });
+    }
+
+    private void Update(Context c, final String obj) {
+        final EditText taskEditText = new EditText(c);
+        taskEditText.setText(obj);
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("Modification")
+                .setMessage("Modifier le stade :")
+                .setView(taskEditText)
+                .setPositiveButton("Modifier", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        db.collection("Adresse").whereEqualTo("Adresse", obj).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                                if (e != null) {
+                                    Log.w("", "listen:error", e);
+                                    return;
+                                }
+
+                                for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+
+                                    String docid = dc.getDocument().getId();
+
+                                    DocumentReference ref = db.document("Adresse/" + docid);
+                                    String task = String.valueOf(taskEditText.getText());
+                                    Map<String, Object> upStade = new HashMap<>();
+                                    upStade.put("Adresse", task);
+                                    ref.set(upStade);
+                                    Toast.makeText(getApplicationContext(), "La modidfication a été enregistrée ", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        });
+
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }
 
 
     public void carte(View view) {
         try {
-//n°1 Récupération du contenu saisi dans l'objet
+
             String vsAdresse = editAdresse;
             vsAdresse = vsAdresse.replace(' ', '+');
-//n°2 Emission de l'intention cartographique
             Intent geoIntent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("geo:0,0?q=" + vsAdresse));
             startActivity(geoIntent);
@@ -257,36 +211,10 @@ public class AjouterStade extends AppCompatActivity {
     }
 
 
-    private void Update(Context c, final String obj) {
-        final EditText taskEditText = new EditText(c);
-        taskEditText.setText(obj);
-        AlertDialog dialog = new AlertDialog.Builder(c)
-                .setTitle("Ajouter une saison")
-                .setMessage("Comment voulez-vous appeler votre saison ?")
-                .setView(taskEditText)
-                .setPositiveButton("Créer", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        String docid = db.collection("Adresse").document().getId().toString();
-                        DocumentReference ref = db.document("Adresse/Adresse");
-                        String task = String.valueOf(taskEditText.getText());
-                        Map<String, Object> upStade = new HashMap<>();
-                        upStade.put("Adresse", task);
-//                        DocumentReference ref = db.document("Adresse/Adresse");
-                        ref.set(upStade);
-
-                        Toast.makeText(getApplicationContext(), docid, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton("Cancel", null)
-                .create();
-        dialog.show();
-    }
-
 }
 
 
 //Inspiré pour l'insert : https://www.youtube.com/watch?v=7hwlMKUgTQc
 //Inspiré pour le read : https://www.youtube.com/watch?v=S6nLyzW6Jyo
 //Carte inspiré du TP
+//J'ai posé la question sur un forum pour l'accès à l'id: https://stackoverflow.com/questions/55246790/get-document-identifier-firestore
