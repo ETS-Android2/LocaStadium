@@ -55,7 +55,7 @@
         android:layout_width="276dp"
         android:layout_height="49dp"
         android:layout_marginTop="392dp"
-        android:text="Ajouter un stade"
+        android:text="Gérer les stades"
         android:textAlignment="center"
         android:onClick="openAjouterStade"
         android:textStyle="bold"

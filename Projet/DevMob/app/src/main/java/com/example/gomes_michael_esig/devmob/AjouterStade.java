@@ -24,25 +24,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldPath;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.lang.annotation.Documented;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -117,6 +108,7 @@ public class AjouterStade extends AppCompatActivity {
                     adrList.add(snapshot.getString("Adresse"));
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, adrList);
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_multiple_choice, adrList);
                 adapter.notifyDataSetChanged();
                 listview.setAdapter(adapter);
 
@@ -186,6 +178,32 @@ public class AjouterStade extends AppCompatActivity {
                             }
                         });
 
+                    }
+                })
+                .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        db.collection("Adresse").whereEqualTo("Adresse", obj).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                                if (e != null) {
+                                    Log.w("", "listen:error", e);
+                                    return;
+                                }
+
+                                for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+
+                                    String docid = dc.getDocument().getId();
+
+                                    DocumentReference ref = db.document("Adresse/" + docid);
+                                    ref.delete();
+                                    Toast.makeText(getApplicationContext(), obj + " a été supprimé avec succès", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        });
                     }
                 })
                 .setNegativeButton("Cancel", null)
