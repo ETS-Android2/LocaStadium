@@ -149,6 +149,7 @@ public class AjouterStade extends AppCompatActivity {
         AlertDialog dialog = new AlertDialog.Builder(c)
                 .setTitle("Modification")
                 .setMessage("Modifier le stade :")
+                .setIcon(R.drawable.logo)
                 .setView(taskEditText)
                 .setPositiveButton("Modifier", new DialogInterface.OnClickListener() {
                     @Override
@@ -166,7 +167,6 @@ public class AjouterStade extends AppCompatActivity {
                                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
 
                                     String docid = dc.getDocument().getId();
-
                                     DocumentReference ref = db.document("Adresse/" + docid);
                                     String task = String.valueOf(taskEditText.getText());
                                     Map<String, Object> upStade = new HashMap<>();

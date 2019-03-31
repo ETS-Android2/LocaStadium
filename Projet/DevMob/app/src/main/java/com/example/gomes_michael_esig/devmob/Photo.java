@@ -33,3 +33,6 @@ public class Photo extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
+
+// photo : https://www.youtube.com/watch?v=kanbIK-Jf3A

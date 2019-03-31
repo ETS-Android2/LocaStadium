@@ -25,16 +25,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener, GoogleApiClient.OnConnectionFailedListener {
-
-    TextView temp;
-    TextView conseil;
-    ImageView image;
-    private SensorManager mSensorManager;
-    private Sensor mTemperature;
-    private final static String NOT_SUPPORTED_MESSAGE = "Sorry, sensor not available for this device.";
-
-
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
 //    Admin
     private GoogleApiClient googleApiClient;
@@ -45,16 +36,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        temp = (TextView) findViewById(R.id.text_view_temp);
-        conseil= (TextView)findViewById(R.id.text_view_id);
-        image= (ImageView)findViewById(R.id.crampon);
-        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.ICE_CREAM_SANDWICH){
-            mTemperature= mSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE); // requires API level 14.
-        }
-        if (mTemperature == null) {
-            temp.setText(NOT_SUPPORTED_MESSAGE);
-        }
 
 //        connexion
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -80,40 +61,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mSensorManager.registerListener(this, mTemperature, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mSensorManager.unregisterListener(this);
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        float ambient_temperature = event.values[0];
-
-        temp.setText("Il fait " + String.valueOf(ambient_temperature)  + " " + getResources().getString(R.string.celsius) + ",");
-        if (ambient_temperature < 2){
-            conseil.setText("tu vas sûrment jouer sur synthétique, prépare tes plastiques");
-            image.setImageResource(R.drawable.cramponplastique);
-            return;
-        }
-        else{
-            conseil.setText("tu vas sûrment jouer sur herbe, prépare tes fers");
-            image.setImageResource(R.drawable.fer);
-            return;
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Do something here if sensor accuracy changes.
     }
 
     /* Lien avec autres layout*/
@@ -154,8 +101,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if(account.getDisplayName().equals("elv-michael.gmsds@eduge.ch") || (account.getDisplayName().equals("MICHAEL ELV-MICHAEL.GMSDS"))){
                 goAdminScreen();
             }else{
-                Toast.makeText(this, "yes", Toast.LENGTH_SHORT).show();
-                goUserScreen();
+                Toast.makeText(this, "Accès privé", Toast.LENGTH_SHORT).show();
+                logOut();
+                goMainScreen();
             }
         }else{
             Toast.makeText(this, "La session ne peut pas se lancer", Toast.LENGTH_SHORT).show();
@@ -173,13 +121,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(intent);
     }
 
-    private void goUserScreen() {
-        Intent intent = new Intent(this, stat.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
 
-    public void logOut(View view){
+//    public void logOut(View view){
+//        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+//            @Override
+//            public void onResult(@NonNull Status status) {
+//                if(status.isSuccess()){
+//                    goMainScreen();
+//                }else{
+//                    Toast.makeText(getApplicationContext(), "Impossible de fermer", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
+
+    public void logOut(){
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
@@ -191,15 +147,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
     }
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }
 
-
-/*Code température transmis par Laurent qui vient de : https://stackoverflow.com/questions/11987134/how-to-measure-ambient-temperature-in-android*/
 
 // Code inspié du tutoriel : https://www.youtube.com/watch?v=O3aemJ9eAAA
 // Aide : https://developers.google.com/identity/sign-in/android/sign-in
