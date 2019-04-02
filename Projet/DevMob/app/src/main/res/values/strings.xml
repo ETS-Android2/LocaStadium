@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">DevMob</string>
     <string name="celsius">celsius</string>
+    <string name="LogOut">Se déconnecter</string>
+    <string name="GererStades">Gérer les stades</string>
+    <string name="addStade">Ajouter un stade</string>
+    <string name="adresse">Adresse..</string>
+    <string name="add">Ajouter</string>
+    <string name="Title">LocaStadium</string>
 </resources>

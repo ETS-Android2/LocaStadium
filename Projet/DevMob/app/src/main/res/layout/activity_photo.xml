@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/terrain1"
     tools:context="com.example.gomes_michael_esig.devmob.Photo">
 
     <ImageButton
@@ -12,14 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:onClick="gallery"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.768"
-        app:srcCompat="@drawable/gallerie"
-        android:background="@android:color/transparent"
-        android:onClick="gallery"/>
+        app:layout_constraintVertical_bias="0.691"
+        app:srcCompat="@drawable/gallerie" />
 
     <ImageButton
         android:id="@+id/camera"
@@ -27,30 +28,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:onClick="camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.101"
-        app:srcCompat="@drawable/camera"
-        android:background="@android:color/transparent"
-        android:onClick="camera"/>
+        app:layout_constraintVertical_bias="0.177"
+        app:srcCompat="@drawable/camera" />
 
-
-    <ImageButton
-        android:id="@+id/menu"
-        android:layout_width="66dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/logo"
-        android:background="@android:color/transparent"
-        android:onClick="backMenu"/>
 
 </android.support.constraint.ConstraintLayout>

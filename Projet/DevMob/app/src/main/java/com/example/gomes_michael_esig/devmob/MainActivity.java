@@ -22,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
@@ -74,11 +75,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         startActivity(i);
     }
 
-    public void openStat(View view){
-        Intent i = new Intent(this, stat.class);
-        startActivity(i);
-    }
-
 
 //    Admin
 @Override
@@ -97,11 +93,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             GoogleSignInAccount account = result.getSignInAccount();
 //          Test d'accès
 
-            Log.d("", "NOMMMMMM:" + account.getDisplayName() + "-------------------------------------------------------------");
+            Log.d("", "NOM:" + account.getDisplayName());
             if(account.getDisplayName().equals("elv-michael.gmsds@eduge.ch") || (account.getDisplayName().equals("MICHAEL ELV-MICHAEL.GMSDS"))){
                 goAdminScreen();
             }else{
-                Toast.makeText(this, "Accès privé", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Accès réservé à l'administrateur", Toast.LENGTH_SHORT).show();
                 logOut();
                 goMainScreen();
             }
@@ -120,6 +116,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+
 
 
 //    public void logOut(View view){

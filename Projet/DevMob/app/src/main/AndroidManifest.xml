@@ -18,7 +18,6 @@
         </activity>
         <activity android:name=".Photo" />
         <activity android:name=".Stade" />
-        <activity android:name=".stat" />
         <activity android:name=".Admin" />
         <activity android:name=".AjouterStade" />
     </application>

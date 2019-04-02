@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/terrain1"
     tools:context="com.example.gomes_michael_esig.devmob.AjouterStade">
 
     <TextView
@@ -11,8 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
-        android:fontFamily="monospace"
-        android:text="Ajouter un stade"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/addStade"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -25,10 +27,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
-        android:hint="Adresse.."
+        android:hint="@string/adresse"
         android:inputType="textPersonName"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,19 +40,20 @@
     <Button
         android:id="@+id/btnAjouter"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/white"
         android:fontFamily="monospace"
-        android:text="Save"
+        android:text="@string/add"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtAdresse"
+        app:layout_constraintTop_toTopOf="@+id/txtAdresse"
         tools:ignore="MissingConstraints"
-        tools:text="Ajouter"
-        android:layout_marginRight="8dp" />
+        tools:text="Ajouter" />
+        <!--a voir-->
 
     <ListView
         android:id="@+id/listStade"
@@ -58,7 +62,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@android:color/darker_gray"
+        android:background="@drawable/border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
