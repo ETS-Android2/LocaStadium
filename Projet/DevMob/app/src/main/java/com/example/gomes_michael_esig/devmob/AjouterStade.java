@@ -43,13 +43,12 @@ import javax.annotation.Nullable;
 
 public class AjouterStade extends AppCompatActivity {
 
+    //Variables
     private EditText texteAdresse;
     private Button add;
     private FirebaseFirestore db;
     private String obj;
     private String editAdresse;
-
-    //    Read
     ListView listview;
     List<String> adrList = new ArrayList<>();
 
@@ -61,23 +60,21 @@ public class AjouterStade extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         db = FirebaseFirestore.getInstance();
+
         add = (Button) findViewById(R.id.btnAjouter);
         texteAdresse = (EditText) findViewById(R.id.txtAdresse);
 
-
+        //Insertion
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (texteAdresse.getText().toString().isEmpty()) {
-                    Toast.makeText(AjouterStade.this, "Le champs est vide", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AjouterStade.this, "Le champ est vide", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 String adresse = texteAdresse.getText().toString();
                 Map<String, String> userMap = new HashMap<>();
                 userMap.put("Adresse", adresse);
-
                 db.collection("Adresse").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -97,9 +94,8 @@ public class AjouterStade extends AppCompatActivity {
 
 
 
-//        READ
+//       Affichage des données
         listview = (ListView) findViewById(R.id.listStade);
-
         db.collection("Adresse").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -108,14 +104,13 @@ public class AjouterStade extends AppCompatActivity {
                     adrList.add(snapshot.getString("Adresse"));
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, adrList);
-//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_multiple_choice, adrList);
                 adapter.notifyDataSetChanged();
                 listview.setAdapter(adapter);
 
             }
         });
 
-//        map
+//       Ouverture de la maps
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -127,7 +122,7 @@ public class AjouterStade extends AppCompatActivity {
             }
         });
 
-//        Update
+//       Modification
         listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -136,12 +131,12 @@ public class AjouterStade extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 final String obj = (String) arg0.getItemAtPosition(pos);
                 Log.v("long clicked", "pos: " + obj);
-
                 Update(AjouterStade.this, obj);
                 return true;
             }
         });
     }
+
 
     private void Update(Context c, final String obj) {
         final EditText taskEditText = new EditText(c);
@@ -154,18 +149,14 @@ public class AjouterStade extends AppCompatActivity {
                 .setPositiveButton("Modifier", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         db.collection("Adresse").whereEqualTo("Adresse", obj).addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
                                 if (e != null) {
                                     Log.w("", "listen:error", e);
                                     return;
                                 }
-
                                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
-
                                     String docid = dc.getDocument().getId();
                                     DocumentReference ref = db.document("Adresse/" + docid);
                                     String task = String.valueOf(taskEditText.getText());
@@ -174,7 +165,6 @@ public class AjouterStade extends AppCompatActivity {
                                     ref.set(upStade);
                                     Toast.makeText(getApplicationContext(), "La modidfication a été enregistrée ", Toast.LENGTH_SHORT).show();
                                 }
-
                             }
                         });
 
@@ -183,16 +173,13 @@ public class AjouterStade extends AppCompatActivity {
                 .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                         db.collection("Adresse").whereEqualTo("Adresse", obj).addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
                                 if (e != null) {
                                     Log.w("", "listen:error", e);
                                     return;
                                 }
-
                                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
 
                                     String docid = dc.getDocument().getId();
@@ -201,7 +188,6 @@ public class AjouterStade extends AppCompatActivity {
                                     ref.delete();
                                     Toast.makeText(getApplicationContext(), obj + " a été supprimé avec succès", Toast.LENGTH_SHORT).show();
                                 }
-
                             }
                         });
                     }

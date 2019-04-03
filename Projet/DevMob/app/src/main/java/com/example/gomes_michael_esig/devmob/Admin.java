@@ -20,15 +20,12 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-public class Admin extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
-
+public class Admin extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+    //Variables
     private GoogleApiClient googleApiClient;
-
-//    Infos
     ImageView photoLogin;
     TextView nameLogin;
     TextView emailLogin;
-
 
 
     @Override
@@ -36,6 +33,7 @@ public class Admin extends AppCompatActivity implements GoogleApiClient.OnConnec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        //Authentification
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -46,8 +44,6 @@ public class Admin extends AppCompatActivity implements GoogleApiClient.OnConnec
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-
-//        Infos
         photoLogin = (ImageView) findViewById(R.id.imgLog);
         nameLogin = (TextView) findViewById(R.id.nameLog);
         emailLogin = (TextView) findViewById(R.id.emailLog);
@@ -57,27 +53,27 @@ public class Admin extends AppCompatActivity implements GoogleApiClient.OnConnec
     protected void onStart() {
         super.onStart();
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-    if (opr.isDone()){
+        if (opr.isDone()) {
             GoogleSignInResult result = opr.get();
-           handleSignInResult(result);
-        }else{
+            handleSignInResult(result);
+        } else {
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                   handleSignInResult(googleSignInResult);
+                    handleSignInResult(googleSignInResult);
                 }
             });
         }
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        if(result.isSuccess()){
+        if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
             nameLogin.setText(account.getDisplayName());
             emailLogin.setText(account.getEmail());
             Glide.with(this).load(account.getPhotoUrl()).into(photoLogin);
 
-        }else{
+        } else {
             goMainScreen();
         }
     }
@@ -87,32 +83,28 @@ public class Admin extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     }
 
-
-    private void goMainScreen() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
-    public void logOut(View view){
+    public void logOut(View view) {
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
-                if(status.isSuccess()){
+                if (status.isSuccess()) {
                     goMainScreen();
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Impossible de fermer", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    public void backMenu(View view){
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+
+    //Lien avec autres layout
+    private void goMainScreen() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
-    public void openAjouterStade(View view){
+    public void openAjouterStade(View view) {
         Intent i = new Intent(this, AjouterStade.class);
         startActivity(i);
     }

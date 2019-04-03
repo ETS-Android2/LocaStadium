@@ -35,9 +35,11 @@ public class Stade extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stade);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);//Garde clavier fermer au démarrage
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);//Garde clavier fermé au démarrage
 
         db = FirebaseFirestore.getInstance();
+
+       //Remplissage de l'arraylist
         listview = (ListView) findViewById(R.id.lvStade);
         db.collection("Adresse").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -55,7 +57,6 @@ public class Stade extends AppCompatActivity {
         //Recherche Manuelle stade
         ArrayAdapter<String> ad = new ArrayAdapter<String>
                 (this, android.R.layout.select_dialog_item, adrList);
-
         final AutoCompleteTextView actv = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         actv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,12 +67,12 @@ public class Stade extends AppCompatActivity {
                 carte(view);
             }
         });
-        actv.setThreshold(1);//will start working from first character
+        actv.setThreshold(1);//Commence à chercher depuis le premier caractère
         actv.setAdapter(ad);//setting the adapter data into the AutoCompleteTextView
-        actv.setTextColor(Color.RED);
+        actv.setTextColor(Color.WHITE);
         actv.setTextSize(25);
 
-//        Carte
+//        Appel de la carte
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -79,18 +80,18 @@ public class Stade extends AppCompatActivity {
                 Object o = listview.getItemAtPosition(position);
                 editAdresse = (String) o;
                 carte(arg1);
-                Log.d("", "Stade :"+ o);
+                Log.d("", "Stade :" + o);
             }
         });
-
     }
+
 
     public void carte(View view) {
         try {
-//n°1 Récupération du contenu saisi dans l'objet
+            //n°1 Récupération du contenu saisi dans l'objet
             String vsAdresse = editAdresse;
             vsAdresse = vsAdresse.replace(' ', '+');
-//n°2 Emission de l'intention cartographique
+            //n°2 Emission de l'intention cartographique
             Intent geoIntent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("geo:0,0?q=" + vsAdresse));
             startActivity(geoIntent);

@@ -1,12 +1,15 @@
 package com.example.gomes_michael_esig.devmob;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +31,8 @@ import com.google.android.gms.common.api.Status;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-//    Admin
+
+    //  Authentification
     private GoogleApiClient googleApiClient;
     private SignInButton signIn;
     public static final int CODE = 777;
@@ -38,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        connexion
+//      Authentification
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -54,34 +58,34 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onClick(View view) {
                 Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
                 startActivityForResult(intent, CODE);
-
             }
         });
 
     }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 
     /* Lien avec autres layout*/
-    public void openStadeliste(View view){
+    public void openStadeliste(View view) {
         Intent i = new Intent(this, Stade.class);
         startActivity(i);
     }
 
-    public void openPhoto(View view){
+    public void openPhoto(View view) {
         Intent i = new Intent(this, Photo.class);
         startActivity(i);
     }
 
 
-//    Admin
-@Override
+    //    Authentification
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == CODE){
-            GoogleSignInResult result =  Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+        if (requestCode == CODE) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             int statusCode = result.getStatus().getStatusCode();
             Log.d("", "handleSignInResult:" + result.toString() + "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             handleSignInResult(result);
@@ -89,19 +93,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        if(result.isSuccess()){
+        if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
 //          Test d'accès
-
             Log.d("", "NOM:" + account.getDisplayName());
-            if(account.getDisplayName().equals("elv-michael.gmsds@eduge.ch") || (account.getDisplayName().equals("MICHAEL ELV-MICHAEL.GMSDS"))){
+            if (account.getDisplayName().equals("elv-michael.gmsds@eduge.ch") || (account.getDisplayName().equals("MICHAEL ELV-MICHAEL.GMSDS"))) {
                 goAdminScreen();
-            }else{
+            } else {
                 Toast.makeText(this, "Accès réservé à l'administrateur", Toast.LENGTH_SHORT).show();
                 logOut();
                 goMainScreen();
             }
-        }else{
+        } else {
             Toast.makeText(this, "La session ne peut pas se lancer", Toast.LENGTH_SHORT).show();
         }
     }
@@ -111,13 +114,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
     private void goAdminScreen() {
         Intent intent = new Intent(this, Admin.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
-
 
 
 //    public void logOut(View view){
@@ -133,18 +135,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 //        });
 //    }
 
-    public void logOut(){
+    public void logOut() {
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
-                if(status.isSuccess()){
+                if (status.isSuccess()) {
                     goMainScreen();
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Impossible de fermer", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
