@@ -170,7 +170,7 @@ public class AjouterStade extends AppCompatActivity {
 
                     }
                 })
-                .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+                .setNeutralButton("Supprimer", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         db.collection("Adresse").whereEqualTo("Adresse", obj).addSnapshotListener(new EventListener<QuerySnapshot>() {

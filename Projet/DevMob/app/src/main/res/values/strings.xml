@@ -8,4 +8,8 @@
     <string name="add">Ajouter</string>
     <string name="Title">LocaStadium</string>
     <string name="gererLesStades">Gérer les stades</string>
+    <string name="photo">Photo</string>
+    <string name="stades">Stades</string>
+    <string name="consulter_ma_gallerie">Consulter ma gallerie</string>
+    <string name="photographier_un_stade">Photographier un stade</string>
 </resources>
