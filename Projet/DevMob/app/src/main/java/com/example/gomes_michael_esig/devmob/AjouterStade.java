@@ -59,12 +59,12 @@ public class AjouterStade extends AppCompatActivity {
         setContentView(R.layout.activity_ajouter_stade);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        //Assignation aux variables
         db = FirebaseFirestore.getInstance();
-
         add = (Button) findViewById(R.id.btnAjouter);
         texteAdresse = (EditText) findViewById(R.id.txtAdresse);
 
-        //Insertion
+        //Insertion d'un stade
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,13 +186,13 @@ public class AjouterStade extends AppCompatActivity {
 
                                     DocumentReference ref = db.document("Adresse/" + docid);
                                     ref.delete();
-                                    Toast.makeText(getApplicationContext(), obj + " a été supprimé avec succès", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), obj + " a été supprimé", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
                     }
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton("Annuler", null)
                 .create();
         dialog.show();
     }
@@ -214,11 +214,11 @@ public class AjouterStade extends AppCompatActivity {
         }
     }
 
-
 }
 
-
-//Inspiré pour l'insert : https://www.youtube.com/watch?v=7hwlMKUgTQc
-//Inspiré pour le read : https://www.youtube.com/watch?v=S6nLyzW6Jyo
-//Carte inspiré du TP
-//J'ai posé la question sur un forum pour l'accès à l'id: https://stackoverflow.com/questions/55246790/get-document-identifier-firestore
+/*
+Inspiré pour l'insert : https://www.youtube.com/watch?v=7hwlMKUgTQc
+Inspiré pour le read : https://www.youtube.com/watch?v=S6nLyzW6Jyo
+Carte inspiré du TP
+J'ai posé la question sur un forum pour l'accès à l'id: https://stackoverflow.com/questions/55246790/get-document-identifier-firestore
+*/

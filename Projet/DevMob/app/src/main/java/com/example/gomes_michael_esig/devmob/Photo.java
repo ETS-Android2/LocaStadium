@@ -13,19 +13,12 @@ public class Photo extends AppCompatActivity {
         setContentView(R.layout.activity_photo);
     }
 
-    public void backMenu(View view){
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-    }
-
     public void camera(View view){
-        //Inspiré de : https://stackoverflow.com/questions/13977245/android-open-camera-from-button
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         startActivity(intent);
     }
 
     public void gallery(View view){
-        //Inspiré de : https://stackoverflow.com/questions/16928727/open-gallery-app-from-android-intent/23821227
         Intent intent = new Intent();
         intent.setAction(android.content.Intent.ACTION_VIEW);
         intent.setType("image/*");
@@ -34,5 +27,8 @@ public class Photo extends AppCompatActivity {
     }
 }
 
-
-// photo : https://www.youtube.com/watch?v=kanbIK-Jf3A
+/*
+Photos inspiré de : https://stackoverflow.com/questions/13977245/android-open-camera-from-button
+Objectif prochaine version photo : https://www.youtube.com/watch?v=kanbIK-Jf3A
+Gallerie inspiré de : https://stackoverflow.com/questions/16928727/open-gallery-app-from-android-intent/23821227
+*/

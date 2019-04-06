@@ -72,7 +72,7 @@ public class Stade extends AppCompatActivity {
         actv.setTextColor(Color.WHITE);
         actv.setTextSize(25);
 
-//        Appel de la carte
+        //Appel de la carte
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -84,7 +84,6 @@ public class Stade extends AppCompatActivity {
             }
         });
     }
-
 
     public void carte(View view) {
         try {
@@ -102,5 +101,4 @@ public class Stade extends AppCompatActivity {
             ad.show();
         }
     }
-
 }

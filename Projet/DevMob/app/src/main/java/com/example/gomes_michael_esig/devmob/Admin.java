@@ -44,11 +44,13 @@ public class Admin extends AppCompatActivity implements GoogleApiClient.OnConnec
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
+        //Assignation
         photoLogin = (ImageView) findViewById(R.id.imgLog);
         nameLogin = (TextView) findViewById(R.id.nameLog);
         emailLogin = (TextView) findViewById(R.id.emailLog);
     }
 
+    //Google Authentification
     @Override
     protected void onStart() {
         super.onStart();
@@ -66,6 +68,7 @@ public class Admin extends AppCompatActivity implements GoogleApiClient.OnConnec
         }
     }
 
+    //Google Authentification
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
@@ -78,6 +81,7 @@ public class Admin extends AppCompatActivity implements GoogleApiClient.OnConnec
         }
     }
 
+    //Google Authentification
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
@@ -111,10 +115,11 @@ public class Admin extends AppCompatActivity implements GoogleApiClient.OnConnec
 
 }
 
-
-// Code inspié du tutoriel : https://www.youtube.com/watch?v=O3aemJ9eAAA
-// Aide : https://developers.google.com/identity/sign-in/android/sign-in
-// Meme problème : https://stackoverflow.com/questions/43015476/googlesigninresult-always-returning-not-success-staus
-// Résolution problème token null : https://stackoverflow.com/questions/34685928/token-null-sign-in-google-account
+/*
+Code inspié du tutoriel : https://www.youtube.com/watch?v=O3aemJ9eAAA
+Aide : https://developers.google.com/identity/sign-in/android/sign-in
+Meme problème : https://stackoverflow.com/questions/43015476/googlesigninresult-always-returning-not-success-staus
+Résolution problème token null : https://stackoverflow.com/questions/34685928/token-null-sign-in-google-account
+*/
 
 

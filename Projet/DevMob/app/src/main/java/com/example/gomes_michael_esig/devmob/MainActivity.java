@@ -1,21 +1,11 @@
 package com.example.gomes_michael_esig.devmob;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -25,14 +15,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
 
-    //  Authentification
+    //Google Authentification
     private GoogleApiClient googleApiClient;
     private SignInButton signIn;
     public static final int CODE = 777;
@@ -42,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//      Authentification
+        //Google Authentification
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -62,25 +51,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         });
 
     }
-
+    //Google Authentification
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 
-    /* Lien avec autres layout*/
-    public void openStadeliste(View view) {
-        Intent i = new Intent(this, Stade.class);
-        startActivity(i);
-    }
-
-    public void openPhoto(View view) {
-        Intent i = new Intent(this, Photo.class);
-        startActivity(i);
-    }
-
-
-    //    Authentification
+    //Google Authentification
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -92,10 +69,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
+    //Google Authentification
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
-//          Test d'accès
+            //Test d'accès
             Log.d("", "NOM:" + account.getDisplayName());
             if (account.getDisplayName().equals("elv-michael.gmsds@eduge.ch") || (account.getDisplayName().equals("MICHAEL ELV-MICHAEL.GMSDS"))) {
                 goAdminScreen();
@@ -108,32 +86,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             Toast.makeText(this, "La session ne peut pas se lancer", Toast.LENGTH_SHORT).show();
         }
     }
-
-    private void goMainScreen() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
-    private void goAdminScreen() {
-        Intent intent = new Intent(this, Admin.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
-
-//    public void logOut(View view){
-//        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-//            @Override
-//            public void onResult(@NonNull Status status) {
-//                if(status.isSuccess()){
-//                    goMainScreen();
-//                }else{
-//                    Toast.makeText(getApplicationContext(), "Impossible de fermer", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//    }
 
     public void logOut() {
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
@@ -148,13 +100,34 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         });
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
+    /* Lien avec autres layout*/
+    public void openStadeliste(View view) {
+        Intent i = new Intent(this, Stade.class);
+        startActivity(i);
     }
+
+    public void openPhoto(View view) {
+        Intent i = new Intent(this, Photo.class);
+        startActivity(i);
+    }
+
+    private void goMainScreen() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    private void goAdminScreen() {
+        Intent intent = new Intent(this, Admin.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
 }
 
 
-// Code inspié du tutoriel : https://www.youtube.com/watch?v=O3aemJ9eAAA
-// Aide : https://developers.google.com/identity/sign-in/android/sign-in
-// Meme problème : https://stackoverflow.com/questions/43015476/googlesigninresult-always-returning-not-success-staus
+/*
+Code inspiré du tutoriel : https://www.youtube.com/watch?v=O3aemJ9eAAA
+Aide : https://developers.google.com/identity/sign-in/android/sign-in
+Meme problème : https://stackoverflow.com/questions/43015476/googlesigninresult-always-returning-not-success-staus
+*/
