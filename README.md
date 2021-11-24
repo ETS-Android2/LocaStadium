@@ -20,7 +20,8 @@
 <p align="center">
 	<img width="800" height="auto" src="https://user-images.githubusercontent.com/48489202/143318755-401bda75-253e-47dd-8f10-7673c5089230.png">
 </p>
-## Screenshots
+
+## Captures d'écran
 <p align="center">
 	<img width="150" height="300" src="https://user-images.githubusercontent.com/48489202/143312125-cde21f18-24c4-447e-9748-e14961e4fdb0.jpg">
 	<img width="150" height="300" src="https://user-images.githubusercontent.com/48489202/143312185-6ff5e732-7064-4846-98d3-779cb22d60ed.jpg">
