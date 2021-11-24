@@ -1,8 +1,9 @@
 <p align="center">
   <img src="https://user-images.githubusercontent.com/48489202/143305206-04ef9213-d99b-4e39-8c49-5fff5dac33b0.png">
 </p>
-
-**LocaStadium** est une application mobile (android) dont la fonctionnalité principale est de géolocaliser tous les stades de Genève de la plus simple des façons. L’utilisateur a la possibilité de rechercher un stade ou un centre sportif dans une liste qui le redirigera sur Google Maps à l’adresse du stade. Afin de facilité la recherche de l’utilisateur, il a également la possibilité de rechercher un stade grâce à une barre de recherche. Il suffit d’entrer le nom du stade ou le quartier où il se trouve et il sera également redirigé sur Google Maps.
+<p align="justify">
+<b>LocaStadium</b> est une application mobile (android) dont la fonctionnalité principale est de géolocaliser tous les stades de Genève de la plus simple des façons. L’utilisateur a la possibilité de rechercher un stade ou un centre sportif dans une liste qui le redirigera sur Google Maps à l’adresse du stade. Afin de facilité la recherche de l’utilisateur, il a également la possibilité de rechercher un stade grâce à une barre de recherche. Il suffit d’entrer le nom du stade ou le quartier où il se trouve et il sera également redirigé sur Google Maps.
+</p>
 
 ## Technologies
 * Java
@@ -15,6 +16,10 @@
 * Prendre des photos
 * Consultation des photos
 
+## Architecture
+<p align="center">
+	<img width="800" height="auto" src="https://user-images.githubusercontent.com/48489202/143318755-401bda75-253e-47dd-8f10-7673c5089230.png">
+</p>
 ## Screenshots
 <p align="center">
 	<img width="150" height="300" src="https://user-images.githubusercontent.com/48489202/143312125-cde21f18-24c4-447e-9748-e14961e4fdb0.jpg">
