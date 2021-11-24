@@ -18,7 +18,7 @@ Project crée avec :
 
 ## Screenshots
 <p align="center">
-<img src="https://user-images.githubusercontent.com/48489202/143312125-cde21f18-24c4-447e-9748-e14961e4fdb0.jpg">
+<img width="260" height="100" src="https://user-images.githubusercontent.com/48489202/143312125-cde21f18-24c4-447e-9748-e14961e4fdb0.jpg">
 <img src="https://user-images.githubusercontent.com/48489202/143312143-e4e0018c-d812-4aa9-8538-a2879d35b4d1.jpg">
 <img src="https://user-images.githubusercontent.com/48489202/143312156-3f9fee8c-2c0b-484a-9674-630fa1ee7f2c.png">
 	<img src="https://user-images.githubusercontent.com/48489202/143312166-bea856a8-982d-47f3-9cea-a003e1cd1a15.jpg">
