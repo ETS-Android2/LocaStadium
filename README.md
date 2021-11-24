@@ -1,2 +1,2 @@
-# ProjetMobile_2019
-Devloppement d'une application android permettant de localiser des stades de football.
+LocaStadium
+Devloppement d'une application mobile déstinée au appareils android permettant de localiser des stades de football.
