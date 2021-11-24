@@ -15,3 +15,6 @@ Project crée avec :
 * Ajout, modification et suppresion de stades
 * Prendre des photos
 * Consultation des photos
+
+## Screenshots
+
